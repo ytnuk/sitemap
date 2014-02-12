@@ -1,0 +1,6 @@
+parameters:
+    webedit:
+        sitemap:
+            directory: %vendor.webedit.directory%/sitemap
+services:
+    - WebEdit\Sitemap\Control\Factory

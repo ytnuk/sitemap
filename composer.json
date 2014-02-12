@@ -1,0 +1,6 @@
+{
+    "name": "webedit/sitemap",
+    "autoload": {
+        "psr-4": {"WebEdit\\Sitemap\\": ""}
+    }
+}

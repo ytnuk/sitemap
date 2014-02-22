@@ -10,10 +10,10 @@ class Presenter extends Front\Presenter {
      * @var \WebEdit\Sitemap\Control\Factory
      * @inject
      */
-    public $sitemapFactory;
+    public $controlFactory;
 
     protected function createComponentSitemap() {
-        return $this->sitemapFactory->create();
+        return $this->controlFactory->create();
     }
 
 }

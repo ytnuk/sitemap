@@ -12,7 +12,7 @@ class Control extends WebEdit\Control {
     private $groupFacade;
     private $group;
 
-    public function __construct(Menu\Model\Facade $menuFacade, Group\Model\Facade $groupFacade) {
+    public function __construct(Menu\Facade $menuFacade, Group\Facade $groupFacade) {
         $this->menuFacade = $menuFacade;
         $this->groupFacade = $groupFacade;
         $this->group = $this->groupFacade->repository->getGroupByKey('front');

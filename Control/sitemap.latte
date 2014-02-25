@@ -1,12 +1,12 @@
 <ul>
     <li>
         <a href="{plink $menu->link,id=>$menu->link_id}">
-            <span class="glyphicon glyphicon-home"></span> {$menu->title}
+            <span class="glyphicon glyphicon-home"></span> {_$menu->title}
         </a>
         <ul n:if="$menu->related('menu')->count()" n:block="sitemap">
             <li n:foreach="$menu->related('menu') as $menu">
                 <a n:tag-if="$menu->link" href="{plink $menu->link,id=>$menu->link_id}">
-                    {$menu->title}
+                    {_$menu->title}
                 </a>
                 {include sitemap}
             </li>

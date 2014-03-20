@@ -2,8 +2,18 @@
 
 namespace WebEdit\Sitemap\Xml;
 
-use WebEdit\Sitemap;
+use WebEdit\Front;
 
-class Presenter extends Sitemap\Presenter {
-    
+final class Presenter extends Front\Presenter {
+
+    /**
+     * @var \WebEdit\Sitemap\Control\Factory
+     * @inject
+     */
+    public $controlFactory;
+
+    protected function createComponentSitemap() {
+        return $this->controlFactory->create();
+    }
+
 }

@@ -6,28 +6,33 @@ use WebEdit;
 use WebEdit\Menu;
 use WebEdit\Menu\Group;
 
-class Control extends WebEdit\Control {
+final class Control extends WebEdit\Control {
 
     private $menuFacade;
     private $groupFacade;
-    private $group;
+    private $menu;
 
-    public function __construct(Menu\Facade $menuFacade, Group\Facade $groupFacade) {
+    public function __construct($sitemap, Menu\Facade $menuFacade, Group\Facade $groupFacade) {
         $this->menuFacade = $menuFacade;
         $this->groupFacade = $groupFacade;
-        $this->group = $this->groupFacade->repository->getGroupByKey('front');
+        if ($sitemap) {
+            $this->menu = $sitemap->menu->menu;
+        } else {
+            $group = $this->groupFacade->repository->getGroupByKey('front');
+            $this->menu = $group->menu;
+        }
     }
 
     public function render() {
         $template = $this->template;
-        $template->menu = $this->group->menu;
-        $template->setFile(__DIR__ . '/Control/sitemap.latte');
+        $template->menu = $this->menu;
+        $template->setFile(__DIR__ . '/Control/list.latte');
         $template->render();
     }
 
     public function renderXml() {
         $template = $this->template;
-        $template->menu = $this->menuFacade->repository->getChildren($this->group->menu);
+        $template->menu = $this->menuFacade->repository->getChildren($this->menu);
         $template->setFile(__DIR__ . '/Control/xml.latte');
         $template->render();
     }

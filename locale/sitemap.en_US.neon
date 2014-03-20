@@ -1,0 +1,3 @@
+admin:
+    add: Add new sitemap
+    edit: 'Edit sitemap: %sitemap%'

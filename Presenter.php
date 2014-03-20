@@ -4,7 +4,7 @@ namespace WebEdit\Sitemap;
 
 use WebEdit\Front;
 
-class Presenter extends Front\Presenter {
+final class Presenter extends Front\Presenter {
 
     /**
      * @var \WebEdit\Sitemap\Control\Factory
@@ -12,8 +12,26 @@ class Presenter extends Front\Presenter {
      */
     public $controlFactory;
 
+    /**
+     * @var \WebEdit\Sitemap\Repository
+     * @inject
+     */
+    public $repository;
+    private $sitemap;
+
+    public function actionView($id) {
+        $this->sitemap = $this->repository->getSitemap($id);
+        if (!$this->sitemap) {
+            $this->error();
+        }
+    }
+
+    public function renderView() {
+        $this['menu']['breadcrumb'][] = $this->sitemap->menu;
+    }
+
     protected function createComponentSitemap() {
-        return $this->controlFactory->create();
+        return $this->controlFactory->create($this->sitemap);
     }
 
 }

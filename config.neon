@@ -1,6 +1,13 @@
 parameters:
-    webedit:
-        sitemap:
-            directory: %vendor.webedit.directory%/sitemap
+    sitemap:
+        directory: %vendor.webedit.directory%/sitemap
+    locale:
+        - %sitemap.directory%/locale
 services:
-    - WebEdit\Sitemap\Control\Factory
+    - WebEdit\Sitemap\Repository
+    - WebEdit\Sitemap\Facade
+    - WebEdit\Sitemap\Form\Factory
+    -
+        implement: WebEdit\Sitemap\Control\Factory
+        parameters: [sitemap: NULL]
+        arguments: [%sitemap%]

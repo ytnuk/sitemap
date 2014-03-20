@@ -9,5 +9,5 @@ interface Factory {
     /**
      * @return Control
      */
-    public function create();
+    public function create($sitemap = NULL);
 }

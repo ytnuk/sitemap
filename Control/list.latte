@@ -1,16 +1,18 @@
-<ul class="list-unstyled">
-    <li>
-        <span class="glyphicon glyphicon-list"></span>
-        <a n:tag-if="$menu->link" href="{plink $menu->link,id=>$menu->link_id}">
-            {_$menu->title}
-        </a>
-        <ul n:if="$menu->related('menu')->count()" n:block="sitemap">
-            <li n:foreach="$menu->related('menu') as $menu">
-                <a n:tag-if="$menu->link" href="{plink $menu->link,id=>$menu->link_id}">
-                    {_$menu->title}
-                </a>
-                {include sitemap}
-            </li>
-        </ul>
-    </li>
-</ul>
+<nav>
+    <ul class="list-unstyled">
+        <li>
+            <span class="glyphicon glyphicon-list"></span>
+            <a n:tag-if="$menu->link" href="{plink $menu->link,id=>$menu->link_id}">
+                {_$menu->title}
+            </a>
+            <ul n:if="$menu->related('menu')->count()" n:block="sitemap">
+                <li n:foreach="$menu->related('menu') as $menu">
+                    <a n:tag-if="$menu->link" href="{plink $menu->link,id=>$menu->link_id}">
+                        {_$menu->title}
+                    </a>
+                    {include sitemap}
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>

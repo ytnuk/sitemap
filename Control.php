@@ -26,14 +26,14 @@ final class Control extends WebEdit\Control {
     public function render() {
         $template = $this->template;
         $template->menu = $this->menu;
-        $template->setFile(__DIR__ . '/Control/list.latte');
+        $template->setFile($this->getTemplateFiles('list'));
         $template->render();
     }
 
     public function renderXml() {
         $template = $this->template;
         $template->menu = $this->menuFacade->repository->getChildren($this->menu);
-        $template->setFile(__DIR__ . '/Control/xml.latte');
+        $template->setFile($this->getTemplateFiles('xml'));
         $template->render();
     }
 

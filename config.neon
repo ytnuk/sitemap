@@ -6,7 +6,6 @@ parameters:
 services:
     - WebEdit\Sitemap\Repository
     - WebEdit\Sitemap\Facade
-    - WebEdit\Sitemap\Form\Factory
     -
         implement: WebEdit\Sitemap\Control\Factory
         parameters: [sitemap: NULL]

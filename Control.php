@@ -8,17 +8,17 @@ use WebEdit\Menu\Group;
 
 final class Control extends WebEdit\Control {
 
-    private $menuFacade;
-    private $groupFacade;
+    private $menuRepository;
+    private $groupRepository;
     private $menu;
 
-    public function __construct($sitemap, Menu\Facade $menuFacade, Group\Facade $groupFacade) {
-        $this->menuFacade = $menuFacade;
-        $this->groupFacade = $groupFacade;
+    public function __construct($sitemap, Menu\Repository $menuRepository, Group\Repository $groupRepository) {
+        $this->menuRepository = $menuRepository;
+        $this->groupRepository = $groupRepository;
         if ($sitemap) {
             $this->menu = $sitemap->menu->menu;
         } else {
-            $group = $this->groupFacade->repository->getGroupByKey('front');
+            $group = $this->groupRepository->getGroupByKey('front');
             $this->menu = $group->menu;
         }
     }
@@ -32,7 +32,7 @@ final class Control extends WebEdit\Control {
 
     public function renderXml() {
         $template = $this->template;
-        $template->menu = $this->menuFacade->repository->getChildren($this->menu);
+        $template->menu = $this->menuRepository->getChildren($this->menu);
         $template->setFile($this->getTemplateFiles('xml'));
         $template->render();
     }

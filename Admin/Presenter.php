@@ -3,10 +3,11 @@
 namespace WebEdit\Sitemap\Admin;
 
 use WebEdit;
+use WebEdit\Menu;
 
 final class Presenter extends WebEdit\Admin\Presenter {
 
-    private $sitemap;
+    protected $entity;
 
     /**
      * @inject
@@ -22,17 +23,12 @@ final class Presenter extends WebEdit\Admin\Presenter {
 
     /**
      * @inject
-     * @var \WebEdit\Sitemap\Form\Factory
+     * @var \WebEdit\Menu\Facade
      */
-    public $formFactory;
+    public $menuFacade;
 
     public function actionAdd() {
-        $this['form']->onSuccess[] = [$this, 'handleAdd'];
-    }
-
-    public function handleAdd($form) {
-        $sitemap = $this->facade->addSitemap($form->getValues());
-        $this->redirect('Presenter:edit', ['id' => $sitemap->id]);
+        $this['form']['menu']['menu_id']->setItems($this->menuFacade->getChildren());
     }
 
     public function renderAdd() {
@@ -40,30 +36,22 @@ final class Presenter extends WebEdit\Admin\Presenter {
     }
 
     public function actionEdit($id) {
-        $this->sitemap = $this->repository->getSitemap($id);
-        if (!$this->sitemap) {
+        $this->entity = $this->repository->getSitemap($id);
+        if (!$this->entity) {
             $this->error();
         }
-        $this['form']['menu']->setDefaults($this->sitemap->menu);
-        $this['form']->onSuccess[] = [$this, 'handleEdit'];
-    }
-
-    public function handleEdit($form) {
-        if ($form->submitted->name == 'delete') {
-            $this->facade->deleteSitemap($this->sitemap);
-            $this->redirect('Presenter:view');
-        } else {
-            $this->facade->editSitemap($this->sitemap, $form->getValues());
-            $this->redirect('this');
-        }
+        $this['form']['menu']['menu_id']->setItems($this->menuFacade->getChildren($this->entity->menu));
+        $this['form']['menu']->setDefaults($this->entity->menu);
     }
 
     public function renderEdit() {
-        $this['menu']['breadcrumb'][] = $this->translator->translate('sitemap.admin.edit', NULL, ['sitemap' => $this->sitemap->menu->title]);
+        $this['menu']['breadcrumb'][] = $this->translator->translate('sitemap.admin.edit', NULL, ['sitemap' => $this->entity->menu->title]);
     }
 
     protected function createComponentForm() {
-        return $this->formFactory->create($this->sitemap);
+        $form = $this->formFactory->create($this->entity);
+        $form['menu'] = new Menu\Form\Container;
+        return $form;
     }
 
 }

@@ -15,8 +15,8 @@ final class Facade {
         $this->menuFacade = $menuFacade;
     }
 
-    public function addSitemap(array $data) {
-        $menu = $this->menuFacade->addMenu($data);
+    public function add(array $data) {
+        $menu = $this->menuFacade->add($data);
         $data['sitemap']['menu_id'] = $menu->id;
         $sitemap = $this->repository->insert($data['sitemap']);
         $data['menu']['link'] = ':Sitemap:Presenter:view';
@@ -25,11 +25,11 @@ final class Facade {
         return $sitemap;
     }
 
-    public function editSitemap($sitemap, array $data) {
+    public function edit($sitemap, array $data) {
         $this->menuFacade->editMenu($sitemap->menu, $data);
     }
 
-    public function deleteSitemap($sitemap) {
+    public function delete($sitemap) {
         $this->menuFacade->deleteMenu($sitemap->menu);
         $this->repository->remove($sitemap);
     }

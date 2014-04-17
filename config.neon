@@ -1,8 +1,3 @@
-parameters:
-    sitemap:
-        directory: %vendor.webedit.directory%/sitemap
-    locale:
-        - %sitemap.directory%/locale
 services:
     - WebEdit\Sitemap\Repository
     - WebEdit\Sitemap\Facade

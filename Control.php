@@ -4,7 +4,6 @@ namespace WebEdit\Sitemap;
 
 use WebEdit;
 use WebEdit\Menu;
-use WebEdit\Menu\Group;
 
 final class Control extends WebEdit\Control {
 
@@ -12,7 +11,7 @@ final class Control extends WebEdit\Control {
     private $groupRepository;
     private $menu;
 
-    public function __construct($sitemap, Menu\Repository $menuRepository, Group\Repository $groupRepository) {
+    public function __construct($sitemap, Menu\Repository $menuRepository, Menu\Group\Repository $groupRepository) {
         $this->menuRepository = $menuRepository;
         $this->groupRepository = $groupRepository;
         if ($sitemap) {

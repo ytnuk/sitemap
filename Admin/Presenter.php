@@ -3,6 +3,7 @@
 namespace WebEdit\Sitemap\Admin;
 
 use WebEdit;
+use WebEdit\Sitemap;
 use WebEdit\Menu;
 
 final class Presenter extends WebEdit\Admin\Presenter {
@@ -11,19 +12,19 @@ final class Presenter extends WebEdit\Admin\Presenter {
 
     /**
      * @inject
-     * @var \WebEdit\Sitemap\Repository
+     * @var Sitemap\Repository
      */
     public $repository;
 
     /**
      * @inject
-     * @var \WebEdit\Sitemap\Facade
+     * @var Sitemap\Facade
      */
     public $facade;
 
     /**
      * @inject
-     * @var \WebEdit\Menu\Facade
+     * @var Menu\Facade
      */
     public $menuFacade;
 

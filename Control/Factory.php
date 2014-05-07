@@ -2,12 +2,12 @@
 
 namespace WebEdit\Sitemap\Control;
 
-use WebEdit\Sitemap\Control;
+use WebEdit\Sitemap;
 
 interface Factory {
 
     /**
-     * @return Control
+     * @return Sitemap\Control
      */
     public function create($sitemap = NULL);
 }

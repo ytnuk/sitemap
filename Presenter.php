@@ -3,17 +3,18 @@
 namespace WebEdit\Sitemap;
 
 use WebEdit\Front;
+use WebEdit\Sitemap;
 
 final class Presenter extends Front\Presenter {
 
     /**
-     * @var \WebEdit\Sitemap\Control\Factory
+     * @var Sitemap\Control\Factory
      * @inject
      */
     public $controlFactory;
 
     /**
-     * @var \WebEdit\Sitemap\Repository
+     * @var Sitemap\Repository
      * @inject
      */
     public $repository;

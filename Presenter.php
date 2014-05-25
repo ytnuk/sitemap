@@ -11,7 +11,7 @@ final class Presenter extends Front\Presenter {
      * @var Sitemap\Control\Factory
      * @inject
      */
-    public $controlFactory;
+    public $control;
 
     /**
      * @var Sitemap\Repository
@@ -25,6 +25,7 @@ final class Presenter extends Front\Presenter {
         if (!$this->sitemap) {
             $this->error();
         }
+        $this['sitemap']->setEntity($this->sitemap);
     }
 
     public function renderView() {
@@ -32,7 +33,7 @@ final class Presenter extends Front\Presenter {
     }
 
     protected function createComponentSitemap() {
-        return $this->controlFactory->create($this->sitemap);
+        return $this->control->create();
     }
 
 }

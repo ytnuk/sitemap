@@ -9,31 +9,29 @@ final class Control extends WebEdit\Control {
 
     private $menuRepository;
     private $groupRepository;
-    private $menu;
 
-    public function __construct($sitemap, Menu\Repository $menuRepository, Menu\Group\Repository $groupRepository) {
+    public function __construct(Menu\Repository $menuRepository, Menu\Group\Repository $groupRepository, Form\Control\Factory $form) {
         $this->menuRepository = $menuRepository;
         $this->groupRepository = $groupRepository;
-        if ($sitemap) {
-            $this->menu = $sitemap->menu->menu;
-        } else {
-            $group = $this->groupRepository->getGroupByKey('front');
-            $this->menu = $group->menu;
-        }
+        $this->form = $form;
     }
 
     public function render() {
         $template = $this->template;
-        $template->menu = $this->menu;
-        $template->setFile($this->getTemplateFiles('list'));
-        $template->render();
+        if ($this->entity) {
+            $template->menu = $this->entity->menu->menu;
+        } else {
+            $group = $this->groupRepository->getGroupByKey('front');
+            $template->menu = $group->menu;
+        }
+        $template->render($this->getTemplateFiles('list'));
     }
 
     public function renderXml() {
         $template = $this->template;
-        $template->menu = $this->menuRepository->getChildren($this->menu);
-        $template->setFile($this->getTemplateFiles('xml'));
-        $template->render();
+        $group = $this->groupRepository->getGroupByKey('front');
+        $template->menu = $this->menuRepository->getChildren($group->menu);
+        $template->render($this->getTemplateFiles('xml'));
     }
 
 }

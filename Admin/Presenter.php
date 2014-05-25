@@ -4,11 +4,10 @@ namespace WebEdit\Sitemap\Admin;
 
 use WebEdit;
 use WebEdit\Sitemap;
-use WebEdit\Menu;
 
 final class Presenter extends WebEdit\Admin\Presenter {
 
-    protected $entity;
+    private $sitemap;
 
     /**
      * @inject
@@ -18,41 +17,28 @@ final class Presenter extends WebEdit\Admin\Presenter {
 
     /**
      * @inject
-     * @var Sitemap\Facade
+     * @var Sitemap\Control\Factory
      */
-    public $facade;
-
-    /**
-     * @inject
-     * @var Menu\Facade
-     */
-    public $menuFacade;
-
-    public function actionAdd() {
-        $this['form']['menu']['menu_id']->setItems($this->menuFacade->getChildren());
-    }
+    public $control;
 
     public function renderAdd() {
-        $this['menu']['breadcrumb'][] = $this->translator->translate('sitemap.admin.add');
+        $this['menu']['breadcrumb'][] = 'sitemap.admin.add';
     }
 
     public function actionEdit($id) {
-        $this->entity = $this->repository->getSitemap($id);
-        if (!$this->entity) {
+        $this->sitemap = $this->repository->getSitemap($id);
+        if (!$this->sitemap) {
             $this->error();
         }
-        $this['form']['menu']['menu_id']->setItems($this->menuFacade->getChildren($this->entity->menu));
-        $this['form']['menu']->setDefaults($this->entity->menu);
+        $this['sitemap']->setEntity($this->sitemap);
     }
 
     public function renderEdit() {
-        $this['menu']['breadcrumb'][] = $this->translator->translate('sitemap.admin.edit', NULL, ['sitemap' => $this->entity->menu->title]);
+        $this['menu']['breadcrumb'][] = 'sitemap.admin.edit';
     }
 
-    protected function createComponentForm() {
-        $form = $this->formFactory->create($this->entity);
-        $form['menu'] = new Menu\Form\Container;
-        return $form;
+    protected function createComponentSitemap() {
+        return $this->control->create();
     }
 
 }

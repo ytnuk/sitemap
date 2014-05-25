@@ -1,7 +1,5 @@
 services:
     - WebEdit\Sitemap\Repository
     - WebEdit\Sitemap\Facade
-    -
-        implement: WebEdit\Sitemap\Control\Factory
-        parameters: [sitemap: NULL]
-        arguments: [%sitemap%]
+    - WebEdit\Sitemap\Control\Factory
+    - WebEdit\Sitemap\Form\Control\Factory

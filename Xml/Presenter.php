@@ -11,10 +11,10 @@ final class Presenter extends Front\Presenter {
      * @inject
      * @var Sitemap\Control\Factory
      */
-    public $controlFactory;
+    public $control;
 
     protected function createComponentSitemap() {
-        return $this->controlFactory->create();
+        return $this->control->create();
     }
 
 }

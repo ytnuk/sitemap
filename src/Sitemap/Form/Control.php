@@ -2,11 +2,12 @@
 
 namespace WebEdit\Sitemap\Form;
 
+use WebEdit\Entity;
 use WebEdit\Form;
 use WebEdit\Sitemap;
 use WebEdit\Menu;
 
-final class Control extends Form\Control {
+final class Control extends Entity\Form\Control {
 
     private $menuFacade;
 

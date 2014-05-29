@@ -2,10 +2,10 @@
 
 namespace WebEdit\Sitemap;
 
-use WebEdit;
+use WebEdit\Entity;
 use WebEdit\Menu;
 
-final class Control extends WebEdit\Control {
+final class Control extends Entity\Control {
 
     private $menuRepository;
     private $groupRepository;

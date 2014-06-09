@@ -29,7 +29,7 @@ final class Presenter extends Front\Presenter {
     }
 
     public function renderView() {
-        $this['menu']['breadcrumb'][] = $this->sitemap->menu;
+        $this['menu']->setEntity($this->sitemap->menu);
     }
 
     protected function createComponentSitemap() {

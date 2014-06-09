@@ -10,28 +10,24 @@ final class Control extends Entity\Control {
     private $menuRepository;
     private $groupRepository;
 
-    public function __construct(Menu\Repository $menuRepository, Menu\Group\Repository $groupRepository, Form\Control\Factory $form) {
+    public function __construct(Menu\Repository $menuRepository, Menu\Group\Repository $groupRepository, Form\Control\Factory $formControl) {
         $this->menuRepository = $menuRepository;
         $this->groupRepository = $groupRepository;
-        $this->form = $form;
+        $this->formControl = $formControl;
     }
 
-    public function render() {
-        $template = $this->template;
+    public function render($type = 'list') {
         if ($this->entity) {
-            $template->menu = $this->entity->menu->menu;
+            $this->template->menu = $this->entity->menu->menu;
         } else {
             $group = $this->groupRepository->getGroupByKey('front');
-            $template->menu = $group->menu;
+            $this->template->menu = $group->menu;
         }
-        $template->render($this->getTemplateFiles('list'));
+        parent::render($type);
     }
 
     public function renderXml() {
-        $template = $this->template;
-        $group = $this->groupRepository->getGroupByKey('front');
-        $template->menu = $this->menuRepository->getChildren($group->menu);
-        $template->render($this->getTemplateFiles('xml'));
+        $this->render('xml');
     }
 
 }

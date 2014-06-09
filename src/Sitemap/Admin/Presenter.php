@@ -22,7 +22,7 @@ final class Presenter extends WebEdit\Admin\Presenter {
     public $control;
 
     public function renderAdd() {
-        $this['menu']['breadcrumb'][] = 'sitemap.admin.add';
+        $this['menu'][] = 'sitemap.admin.add';
     }
 
     public function actionEdit($id) {
@@ -34,7 +34,7 @@ final class Presenter extends WebEdit\Admin\Presenter {
     }
 
     public function renderEdit() {
-        $this['menu']['breadcrumb'][] = 'sitemap.admin.edit';
+        $this['menu'][] = 'sitemap.admin.edit';
     }
 
     protected function createComponentSitemap() {

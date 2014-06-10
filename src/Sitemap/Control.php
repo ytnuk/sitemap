@@ -16,14 +16,14 @@ final class Control extends Entity\Control {
         $this->formControl = $formControl;
     }
 
-    public function render($type = 'sitemap') {
+    public function render() {
         if ($this->entity) {
             $this->template->menu = $this->entity->menu->menu;
         } else {
             $group = $this->groupRepository->getGroupByKey('front');
             $this->template->menu = $group->menu;
         }
-        parent::render($type);
+        parent::render();
     }
 
 }

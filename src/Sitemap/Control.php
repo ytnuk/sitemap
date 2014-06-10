@@ -16,7 +16,7 @@ final class Control extends Entity\Control {
         $this->formControl = $formControl;
     }
 
-    public function render($type = 'list') {
+    public function render($type = 'sitemap') {
         if ($this->entity) {
             $this->template->menu = $this->entity->menu->menu;
         } else {
@@ -24,10 +24,6 @@ final class Control extends Entity\Control {
             $this->template->menu = $group->menu;
         }
         parent::render($type);
-    }
-
-    public function renderXml() {
-        $this->render('xml');
     }
 
 }

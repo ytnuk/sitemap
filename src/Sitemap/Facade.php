@@ -7,7 +7,7 @@ use WebEdit\Sitemap;
 
 final class Facade {
 
-    public $repository;
+    private $repository;
     private $menuFacade;
 
     public function __construct(Sitemap\Repository $repository, Menu\Facade $menuFacade) {

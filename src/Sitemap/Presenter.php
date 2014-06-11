@@ -7,18 +7,14 @@ use WebEdit\Sitemap;
 
 final class Presenter extends Front\Presenter {
 
-    /**
-     * @var Sitemap\Control\Factory
-     * @inject
-     */
-    public $control;
-
-    /**
-     * @var Sitemap\Repository
-     * @inject
-     */
-    public $repository;
+    private $control;
+    private $repository;
     private $sitemap;
+
+    public function __construct(Sitemap\Repository $repository, Sitemap\Control\Factory $control) {
+        $this->repository = $repository;
+        $this->control = $control;
+    }
 
     public function actionView($id) {
         $this->sitemap = $this->repository->getSitemap($id);

@@ -8,18 +8,13 @@ use WebEdit\Sitemap;
 final class Presenter extends WebEdit\Admin\Presenter {
 
     private $sitemap;
+    private $repository;
+    private $control;
 
-    /**
-     * @inject
-     * @var Sitemap\Repository
-     */
-    public $repository;
-
-    /**
-     * @inject
-     * @var Sitemap\Control\Factory
-     */
-    public $control;
+    public function __construct(Sitemap\Repository $repository, Sitemap\Control\Factory $control) {
+        $this->repository = $repository;
+        $this->control = $control;
+    }
 
     public function renderAdd() {
         $this['menu'][] = 'sitemap.admin.add';

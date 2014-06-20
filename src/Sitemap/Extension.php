@@ -2,9 +2,9 @@
 
 namespace WebEdit\Sitemap;
 
-use WebEdit;
+use WebEdit\Application;
 
-final class Extension extends WebEdit\Extension {
+final class Extension extends Application\Extension {
 
     public function loadConfiguration() {
         $builder = $this->getContainerBuilder();

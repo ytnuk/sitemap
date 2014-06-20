@@ -1,7 +1,7 @@
 {
     "name": "webedit/sitemap",
     "require": {
-        "webedit/core": "dev-master",
+        "webedit/application": "dev-master",
         "webedit/form": "dev-master",
         "webedit/menu": "dev-master"
     },

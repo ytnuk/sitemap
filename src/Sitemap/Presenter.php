@@ -2,10 +2,10 @@
 
 namespace WebEdit\Sitemap;
 
-use WebEdit\Front;
+use WebEdit\Application;
 use WebEdit\Sitemap;
 
-final class Presenter extends Front\Presenter {
+final class Presenter extends Application\Front\Presenter {
 
     private $control;
     private $repository;

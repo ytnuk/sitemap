@@ -1,10 +1,8 @@
 {
     "name": "webedit/sitemap",
     "require": {
-        "webedit/application": "dev-master",
-        "webedit/form": "dev-master",
         "webedit/menu": "dev-master",
-        "webedit/translation": "dev-master"
+        "webedit/front": "dev-master"
     },
     "autoload": {
         "psr-4": {

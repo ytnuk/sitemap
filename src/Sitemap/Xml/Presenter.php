@@ -2,9 +2,9 @@
 
 namespace WebEdit\Sitemap\Xml;
 
-use WebEdit\Front;
+use WebEdit\Application;
 
-final class Presenter extends Front\Presenter
+final class Presenter extends Application\Presenter
 {
 
 } 

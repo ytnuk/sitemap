@@ -1,12 +1,12 @@
 {
-  "name": "webedit/sitemap",
-  "require": {
-    "webedit/menu": "dev-master",
-    "webedit/application": "dev-master"
-  },
-  "autoload": {
-    "psr-4": {
-      "WebEdit\\": "src/"
-    }
-  }
+	"name": "webedit/sitemap",
+	"require": {
+		"webedit/menu": "dev-master",
+		"webedit/application": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"WebEdit\\": "src/"
+		}
+	}
 }

@@ -2,14 +2,14 @@
 
 namespace WebEdit\Sitemap\Xml;
 
-use WebEdit\Application;
+use WebEdit;
 
 /**
  * Class Presenter
  *
  * @package WebEdit\Sitemap
  */
-final class Presenter extends Application\Presenter
+final class Presenter extends WebEdit\Web\Presenter
 {
 
-} 
+}

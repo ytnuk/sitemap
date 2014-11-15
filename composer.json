@@ -2,7 +2,7 @@
 	"name": "webedit/sitemap",
 	"require": {
 		"webedit/menu": "dev-master",
-		"webedit/application": "dev-master"
+		"webedit/web": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {

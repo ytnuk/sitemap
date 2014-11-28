@@ -1,15 +1,15 @@
 <?php
 
-namespace Kutny\Sitemap\Xml;
+namespace Ytnuk\Sitemap\Xml;
 
-use Kutny;
+use Ytnuk;
 
 /**
  * Class Presenter
  *
- * @package Kutny\Sitemap
+ * @package Ytnuk\Sitemap
  */
-final class Presenter extends Kutny\Web\Presenter
+final class Presenter extends Ytnuk\Web\Presenter
 {
 
 }

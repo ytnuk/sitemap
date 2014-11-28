@@ -1,12 +1,12 @@
 {
-	"name": "kutny/sitemap",
+	"name": "ytnuk/sitemap",
 	"require": {
-		"kutny/menu": "dev-master",
-		"kutny/web": "dev-master"
+		"ytnuk/menu": "dev-master",
+		"ytnuk/web": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {
-			"Kutny\\": "src/"
+			"Ytnuk\\": "src/"
 		}
 	}
 }

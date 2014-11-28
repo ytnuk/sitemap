@@ -1,12 +1,12 @@
 {
-	"name": "webedit/sitemap",
+	"name": "kutny/sitemap",
 	"require": {
-		"webedit/menu": "dev-master",
-		"webedit/web": "dev-master"
+		"kutny/menu": "dev-master",
+		"kutny/web": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {
-			"WebEdit\\": "src/"
+			"Kutny\\": "src/"
 		}
 	}
 }

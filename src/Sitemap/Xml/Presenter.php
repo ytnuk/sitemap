@@ -1,15 +1,15 @@
 <?php
 
-namespace WebEdit\Sitemap\Xml;
+namespace Kutny\Sitemap\Xml;
 
-use WebEdit;
+use Kutny;
 
 /**
  * Class Presenter
  *
- * @package WebEdit\Sitemap
+ * @package Kutny\Sitemap
  */
-final class Presenter extends WebEdit\Web\Presenter
+final class Presenter extends Kutny\Web\Presenter
 {
 
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Ytnuk\Sitemap\Xml;
 
 use Ytnuk;
@@ -9,7 +8,8 @@ use Ytnuk;
  *
  * @package Ytnuk\Sitemap
  */
-final class Presenter extends Ytnuk\Web\Presenter
+final class Presenter
+	extends Ytnuk\Web\Presenter
 {
 
 }

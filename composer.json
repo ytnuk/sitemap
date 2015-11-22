@@ -1,8 +1,6 @@
 {
 	"name": "ytnuk/sitemap",
-	"type": "ytnuk-module",
 	"require": {
-		"ytnuk/module": "dev-master",
 		"ytnuk/menu": "dev-master",
 		"ytnuk/web": "dev-master"
 	},

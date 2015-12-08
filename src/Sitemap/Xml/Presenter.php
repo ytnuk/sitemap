@@ -29,6 +29,11 @@ final class Presenter
 	private $properties = [];
 
 	/**
+	 * @var Nextras\Orm\Entity\Reflection\PropertyMetadata
+	 */
+	private $property;
+
+	/**
 	 * @var DOMDocument
 	 */
 	private $document;
@@ -40,28 +45,48 @@ final class Presenter
 		parent::__construct();
 		$this->model = $model;
 		$this->linkRepository = $linkRepository;
-	}
-
-	public function actionView(
-		int $id = NULL,
-		int $page = 0
-	) {
-		$this->properties = array_filter(
-			$this->linkRepository->getEntityMetadata()->getProperties(),
-			function (Nextras\Orm\Entity\Reflection\PropertyMetadata $propertyMetadata) {
-				return $propertyMetadata->relationship && $propertyMetadata->relationship->type === Nextras\Orm\Entity\Reflection\PropertyRelationshipMetadata::ONE_HAS_ONE;
-			}
-		);
 		$this->document = new DOMDocument(
 			'1.0',
 			'UTF-8'
 		);
-		$id === NULL ? $this->generateIndex() : $this->generateSitemap(
-			$id,
-			$page
+	}
+
+	public function actionView(int $id = NULL)
+	{
+		$this->properties = array_combine(
+			array_map(
+				'crc32',
+				array_column(
+					$this->properties = array_filter(
+						$this->linkRepository->getEntityMetadata()->getProperties(),
+						function (Nextras\Orm\Entity\Reflection\PropertyMetadata $propertyMetadata) {
+							return $propertyMetadata->relationship && $propertyMetadata->relationship->type === Nextras\Orm\Entity\Reflection\PropertyRelationshipMetadata::ONE_HAS_ONE;
+						}
+					),
+					'name'
+				)
+			),
+			$this->properties
 		);
+		$id === NULL ? $this->generateIndex() : $this->generateUrlSet($id);
+	}
+
+	public function renderView()
+	{
 		$this->getHttpResponse()->setContentType('application/xml');
 		$this->sendResponse(new Nette\Application\Responses\TextResponse($this->document->saveXML()));
+	}
+
+	protected function createComponentPagination() : Ytnuk\Orm\Pagination\Control
+	{
+		if ( ! $this->property) {
+			$this->error();
+		}
+
+		return new Ytnuk\Orm\Pagination\Control(
+			$this->model->getRepository($this->property->relationship->repository)->findAll(),
+			self::ITEMS_PER_PAGE
+		);
 	}
 
 	private function generateIndex()
@@ -78,18 +103,17 @@ final class Presenter
 		);
 		array_walk(
 			$this->properties,
-			function (Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata) use
+			function (
+				Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata,
+				int $id
+			) use
 			(
 				$index
 			) {
-				$repository = $this->model->getRepository($metadata->relationship->repository);
-				$paginator = (
-				new Ytnuk\Orm\Pagination\Control(
-					$repository->findAll(),
-					self::ITEMS_PER_PAGE
-				)
-				)->getPaginator();
-				$id = $this->getPropertyId($metadata);
+				$this->property = $metadata;
+				$this->params['id'] = $id;
+				$pagination = $this['pagination'];
+				$paginator = $pagination->getPaginator();
 				foreach (
 					range(
 						$paginator->getFirstPage(),
@@ -100,12 +124,9 @@ final class Presenter
 					$sitemap->appendChild(
 						$this->document->createElement(
 							'loc',
-							$this->link(
+							$pagination->link(
 								'//this',
-								[
-									'id' => $id,
-									'page' => $page,
-								]
+								['page' => $page]
 							)
 						)
 					);
@@ -116,58 +137,38 @@ final class Presenter
 						)
 					);
 				}
+				unset($this['pagination']); //mischief managed
 			}
 		);
 	}
 
-	private function generateSitemap(
-		int $id,
-		int $page
+	private function generateUrlSet(
+		int $id
 	) {
-		$properties = array_combine(
-			array_map(
-				[
-					$this,
-					'getPropertyId',
-				],
-				$this->properties
-			),
-			$this->properties
-		);
-		$property = $properties[$id] ? : NULL;
-		if ( ! $property instanceof Nextras\Orm\Entity\Reflection\PropertyMetadata) {
+		if ( ! $this->property = $this->properties[$id] ?? NULL) {
 			$this->error();
 		}
-		$pagination = new Ytnuk\Orm\Pagination\Control(
-			$this->model->getRepository($property->relationship->repository)->findAll(),
-			self::ITEMS_PER_PAGE
-		);
-		if ($pagination->getPaginator()->setPage($page)->getPage() !== $page) {
-			$this->error();
-		}
-		$urlset = $this->document->appendChild(
+		$urlSet = $this->document->appendChild(
 			$this->document->createElementNS(
 				'http://www.sitemaps.org/schemas/sitemap/0.9',
 				'urlset'
 			)
 		);
-		$collection = iterator_to_array($pagination);
+		$collection = iterator_to_array($this['pagination']);
 		array_walk(
 			$collection,
 			function (Nextras\Orm\Entity\IEntity $entity) use
 			(
-				$property,
-				$urlset
+				$urlSet
 			) {
 				//TODO: use parent cache to determine lastmod for whole sitemap
 				//TODO: cache each url element, so lastmod will always be up to date
-				//TODO: maybe make use of components to cache everything, same way as product/post categories
-				$url = $urlset->appendChild($this->document->createElement('url'));
+				$url = $urlSet->appendChild($this->document->createElement('url'));
 				$url->appendChild(
 					$this->document->createElement(
 						'loc',
 						$this->link(
-							$entity->getValue($property->relationship->property),
+							$entity->getValue($this->property->relationship->property),
 							['absolute' => TRUE]
 						)
 					)
@@ -180,10 +181,5 @@ final class Presenter
 				);
 			}
 		);
-	}
-
-	private function getPropertyId(Nextras\Orm\Entity\Reflection\PropertyMetadata $metadata) : int
-	{
-		return crc32($metadata->name);
 	}
 }

@@ -12,6 +12,7 @@ final class Presenter
 {
 
 	const ITEMS_PER_PAGE = 666;
+	const NAMESPACE_URI = 'http://www.sitemaps.org/schemas/sitemap/0.9';
 
 	/**
 	 * @var Nextras\Orm\Model\IModel
@@ -97,7 +98,7 @@ final class Presenter
 		}
 		$index = $this->document->appendChild(
 			$this->document->createElementNS(
-				'http://www.sitemaps.org/schemas/sitemap/0.9',
+				self::NAMESPACE_URI,
 				'sitemapindex'
 			)
 		);
@@ -150,7 +151,7 @@ final class Presenter
 		}
 		$urlSet = $this->document->appendChild(
 			$this->document->createElementNS(
-				'http://www.sitemaps.org/schemas/sitemap/0.9',
+				self::NAMESPACE_URI,
 				'urlset'
 			)
 		);
